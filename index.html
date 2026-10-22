@@ -97,6 +97,8 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}.hint{font-size:12px;
   <hr>
   <div class="toolbar"><div><h2>3. Catálogo</h2><p class="sub" style="margin:3px 0 0">Clique em “Adicionar” para incluir no encarte.</p></div><span class="stat"><strong id="total">0</strong> produtos</span></div>
   <div class="field"><input id="search" placeholder="Buscar produto por nome ou código..."></div>
+  <div class="btnrow"><button class="btn soft" id="addAll">+ Adicionar todos</button><button class="btn soft" id="rmAll">Tirar todos do encarte</button></div>
+  <p class="hint">Com uma busca ativa, os dois botões valem apenas para os produtos encontrados.</p>
   <div id="products" class="products"></div>
   <hr>
   <h2>4. Ordem no encarte</h2><p class="sub">Arraste os itens (aqui ou na pré-visualização) ou use as setas. Os primeiros da lista são os que ocupam os destaques.</p>
@@ -137,6 +139,9 @@ function clearForm(){['pname','pnormal','psale','pcode','pimage','pfile','plab',
 $('clearForm').onclick=clearForm;
 $('products').onclick=e=>{const ed=e.target.closest('[data-edit]'),dl=e.target.closest('[data-del]');if(ed)return editProduct(ed.dataset.edit);if(dl)return delProduct(dl.dataset.del);const b=e.target.closest('[data-add]');if(!b)return;const id=b.dataset.add;if(selected.includes(id)){selected=selected.filter(x=>x!==id)}else{selected.push(id)}renderCatalog();renderFlyer()};
 $('search').oninput=renderCatalog;['campaign','store','valid','format','count','cbrand','caccent','subtitle','band','storeName','footnote','layout','grid','highl','theme','bgOpacity','legalText','useInfo','contactText','deliveryText','installText'].forEach(id=>$(id).addEventListener('input',()=>{renderCatalog();renderFlyer()}));
+function filtered(){const q=$('search').value.toLowerCase();return catalog.filter(p=>(p.name+' '+p.code+' '+p.ean).toLowerCase().includes(q))}
+$('addAll').onclick=()=>{filtered().forEach(p=>{if(!selected.includes(p.id))selected.push(p.id)});renderCatalog();renderFlyer()};
+$('rmAll').onclick=()=>{const ids=filtered().map(p=>p.id);selected=selected.filter(id=>!ids.includes(id));renderCatalog();renderFlyer()};
 $('removeSelected').onclick=()=>{selected=[];renderCatalog();renderFlyer()};$('clearAll').onclick=()=>{if(confirm('Apagar todos os produtos do catálogo?')){catalog=[];selected=[];renderCatalog();renderFlyer()}};
 const KEY='drogalink_v1';let pendingImage='',warned=false;
 function save(){try{localStorage.setItem(KEY,JSON.stringify({catalog,selected,logo:logoData,hb:headBgData,pb:pageBgData,f:Object.fromEntries(['campaign','store','valid','format','count','cbrand','caccent','subtitle','band','storeName','footnote','layout','grid','highl','theme','bgOpacity','legalText','useInfo','contactText','deliveryText','installText'].map(i=>[i,$(i).type==='checkbox'?$(i).checked:$(i).value]))}))}catch(e){if(!warned){warned=true;alert('O navegador não conseguiu salvar (armazenamento cheio ou bloqueado). Exporte o catálogo em CSV para não perder os dados.')}}}
