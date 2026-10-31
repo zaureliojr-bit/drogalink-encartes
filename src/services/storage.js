@@ -15,6 +15,7 @@ export function save() {
       logo: state.logoData,
       hb: state.headBgData,
       pb: state.pageBgData,
+      hba: state.headBgArt,
       f: Object.fromEntries(FIELDS.map(i =>
         [i, $(i).type === 'checkbox' ? $(i).checked : $(i).value]))
     }));
@@ -33,6 +34,7 @@ export function load() {
     state.catalog = Array.isArray(d.catalog) ? d.catalog : [];
     state.logoData = typeof d.logo === 'string' ? d.logo : '';
     state.headBgData = typeof d.hb === 'string' ? d.hb : '';
+    state.headBgArt = !!d.hba;
     state.pageBgData = typeof d.pb === 'string' ? d.pb : '';
     state.selected = (d.selected || []).filter(id => state.catalog.some(p => p.id === id));
     Object.entries(d.f || {}).forEach(([k, v]) => {

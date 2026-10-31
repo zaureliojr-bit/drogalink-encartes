@@ -10,6 +10,7 @@ import { initDrag } from '../editor/drag.js';
 import { renderCatalog, initCatalogList } from '../components/catalog-list.js';
 import { initOrderList } from '../components/order-list.js';
 import { initProductForm } from '../components/product-form.js';
+import { initArtLibrary } from '../components/art-library.js';
 import { exportarPNG } from '../export/png.js';
 import { imprimir } from '../export/pdf.js';
 
@@ -23,6 +24,7 @@ export function initEditor() {
   initOrderList();
   initProductForm();
   initDrag();
+  initArtLibrary();   // assíncrona: busca o manifesto das artes embutidas
 
   $('png').onclick = exportarPNG;
   $('pdf').onclick = imprimir;

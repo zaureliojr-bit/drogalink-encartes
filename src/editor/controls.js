@@ -21,7 +21,11 @@ export function syncFields() {
 async function lerImagem(input, max, png, erro, destino) {
   const f = input.files[0];
   if (!f) return;
-  try { state[destino] = await fileToDataURL(f, max, png); renderFlyer() }
+  try {
+    state[destino] = await fileToDataURL(f, max, png);
+    if (destino === 'headBgData') state.headBgArt = false;  // foto: leva o escurecimento
+    renderFlyer();
+  }
   catch { alert(erro) }
   input.value = '';
 }

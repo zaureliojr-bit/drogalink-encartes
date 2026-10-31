@@ -6,7 +6,8 @@ export const state = {
   catalog: [],        // todos os produtos cadastrados
   selected: [],       // ids no encarte, na ordem em que aparecem
   logoData: '',       // data URL do logo
-  headBgData: '',     // data URL da imagem de cabeçalho enviada
+  headBgData: '',     // data URL da imagem de cabeçalho em uso
+  headBgArt: false,   // true quando veio da biblioteca (arte pronta, sem escurecer)
   pageBgData: '',     // data URL do fundo de página enviado
   editingId: null,    // produto em edição no formulário
   pendingImage: ''    // foto escolhida no formulário, ainda não salva

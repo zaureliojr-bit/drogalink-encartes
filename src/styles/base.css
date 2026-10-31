@@ -64,3 +64,15 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}
   .preview-shell{min-height:300px}
   .flyer{width:100%}
 }
+
+/* Biblioteca de artes */
+.artes{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px;max-height:280px;overflow:auto;margin:10px 0}
+.arte{margin:0;position:relative;border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer;background:#fff;transition:.15s}
+.arte:hover{border-color:var(--brand);transform:translateY(-1px)}
+.arte-img{display:block;height:56px;background-size:cover;background-position:center;background-color:#ececf5}
+.arte figcaption{font-size:11px;padding:5px 6px;color:#55566e;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.arte-x,.arte-rn{position:absolute;top:4px;border:0;border-radius:6px;background:#ffffffd9;color:#55566e;font-size:11px;line-height:1;padding:4px 5px;cursor:pointer}
+.arte-x{right:4px}
+.arte-rn{right:28px}
+.arte-x:hover{background:#fff;color:#c0392b}
+.arte-rn:hover{background:#fff;color:var(--brand)}

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "emb-ofertao",
+    "nome": "Ofertão vermelho",
+    "arquivo": "./public/assets/temas/ofertao-vermelho.svg"
+  },
+  {
+    "id": "emb-saude",
+    "nome": "Saúde verde",
+    "arquivo": "./public/assets/temas/saude-verde.svg"
+  },
+  {
+    "id": "emb-dourado",
+    "nome": "Elegante dourado",
+    "arquivo": "./public/assets/temas/elegante-dourado.svg"
+  },
+  {
+    "id": "emb-festa",
+    "nome": "Festa confete",
+    "arquivo": "./public/assets/temas/festa-confete.svg"
+  }
+]

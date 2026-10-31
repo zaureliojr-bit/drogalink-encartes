@@ -31,8 +31,11 @@ export function applyBrand() {
   const headSrc = state.headBgData || (tema ? themeArt('h', temaId, tema) : '');
   const bgSrc = state.pageBgData || (tema ? themeArt('b', temaId, tema) : '');
 
-  hd.classList.toggle('has-bg', !!state.headBgData);
-  hd.classList.toggle('has-art', !state.headBgData && !!headSrc);
+  // Foto do usuário leva escurecimento para o texto continuar legível; arte
+  // pronta (biblioteca ou tema) já nasce com contraste e vai sem filtro.
+  const foto = !!state.headBgData && !state.headBgArt;
+  hd.classList.toggle('has-bg', foto);
+  hd.classList.toggle('has-art', !!headSrc && !foto);
   if (headSrc) {
     f.style.setProperty('--headbg', 'url("' + headSrc + '")');
     f.style.setProperty('--onbrand', '#fff');
