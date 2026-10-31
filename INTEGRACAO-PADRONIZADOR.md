@@ -4,19 +4,27 @@ Resumo para quem for avaliar a integração deste MVP ao painel do padronizador.
 
 ## O que é
 
-`index.html` — arquivo único, sem build, sem dependências e sem servidor.
-HTML + CSS + JS puro. Hoje roda em https://encartes.drogalink.com.br
-(GitHub Pages, repositório `zaureliojr-bit/drogalink-encartes`).
+Aplicação estática em módulos ES: sem bundler, sem build, sem servidor.
+`index.html` carrega `src/main.js` e o navegador resolve os imports.
+Roda hoje em https://encartes.drogalink.com.br (GitHub Pages, repositório
+`zaureliojr-bit/drogalink-encartes`).
 
 Única dependência externa: SheetJS via CDN, carregada sob demanda **apenas**
 quando o usuário importa XLS/XLSX. CSV não usa nada.
 
+A estrutura de pastas está no README. O que interessa para integrar:
+
+| Caminho | Papel |
+|---|---|
+| `src/state.js` | estado único: catálogo, seleção, imagens |
+| `src/products/model.js` | `addProduct`, `importProducts`, `filtered` |
+| `src/services/catalog-api.js` | leitura do `produtos.json` do padronizador |
+| `src/services/storage.js` | persistência no localStorage |
+| `src/layouts/` | os quatro layouts e as grades |
+| `src/themes/` | temas por família + arte em SVG |
+| `database/schema.sql` | esquema de referência, ainda não usado |
+
 ## Estado da aplicação
-
-Dois arrays globais no escopo do script:
-
-- `catalog` — todos os produtos cadastrados.
-- `selected` — ids dos produtos no encarte, **na ordem em que aparecem**.
 
 Formato do produto:
 
@@ -31,22 +39,28 @@ Formato do produto:
 
 Persistência: `localStorage`, chave `drogalink_v1`, com `{catalog, selected,
 logo, hb, pb, f}` — `f` são os campos do formulário; `logo`, `hb` e `pb` são
-data URLs do logo, da imagem de cabeçalho e do fundo.
+data URLs do logo, da imagem de cabeçalho e do fundo. Temas importados ficam
+na chave `drogalink_temas_v1`.
 
 ## Pontos de entrada para o banco de dados
 
-Para alimentar o catálogo a partir do painel, só é preciso popular `catalog`.
-Três funções já existentes resolvem:
+Módulos ES não deixam nada global, então o app expõe de propósito uma API
+pública em `window.Drogalink` (ver `src/main.js`):
 
-- `addProduct(obj, true)` — insere/atualiza um produto. Usa EAN ou código como
-  chave: reimportar atualiza em vez de duplicar. O segundo argumento `true`
-  evita re-renderizar a cada item.
-- `importProducts(lista)` — importa um lote e mostra o resumo com as
-  inconsistências de preço.
-- Depois do lote: `renderCatalog(); renderFlyer();`
+```js
+Drogalink.importProducts(lista)          // lote, com resumo das inconsistências
+Drogalink.addProduct(obj, true)          // um item; EAN/código evitam duplicar
+Drogalink.buscarCatalogoPublicado(url, soOfertas)
+Drogalink.state.catalog                  // o que está carregado
+Drogalink.render()                       // redesenha catálogo e encarte
+```
 
-Ou seja, a integração mínima é um `fetch` no endpoint do painel mapeando os
-campos acima e chamando `importProducts()`.
+A integração mínima é um `fetch` no endpoint do painel, mapeando as colunas
+para os nomes acima, e uma chamada a `Drogalink.importProducts()`.
+
+O botão "Importar catálogo publicado" já faz isso com o `produtos.json`
+(`src/services/catalog-api.js`), e o endereço é editável no painel — serve
+para uma segunda unidade com catálogo próprio.
 
 ## Imagens: o ponto que motivou a conversa
 

@@ -1,0 +1,37 @@
+/* A folha do encarte: formato, cabeçalho, logo, fundo e rodapé.
+   As medidas em cqw são relativas à largura da folha, para o material
+   escalar junto na tela, no PNG e na impressão. */
+
+.preview-shell{background:#e9eaf2;border-radius:16px;padding:clamp(12px,2vw,24px);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:18px;overflow:auto;min-height:430px}
+
+.flyer{flex:none;container-type:inline-size;width:min(100%,760px);aspect-ratio:1/1.414;background:#fff;box-shadow:0 12px 35px #24244b20;position:relative;overflow:hidden;padding:4%;display:flex;flex-direction:column;gap:2%;color:#272744}
+.flyer.square{aspect-ratio:1/1}
+.flyer.story{aspect-ratio:9/16;width:min(100%,390px)}
+.flyer>*{position:relative;z-index:1}
+
+/* Fundo da página: foto enviada (cover) ou textura do tema (ladrilho). */
+.flyer.hasbg:before{content:"";position:absolute;inset:0;background-image:var(--pagebg);background-size:cover;background-position:center;opacity:var(--bgop,.12);z-index:0;pointer-events:none}
+.flyer.patt:before{background-size:13%;background-repeat:repeat}
+
+.flyer-head{flex:none;background:var(--brand);color:var(--onbrand,#fff);border-radius:13px;padding:3% 4%;position:relative;overflow:hidden}
+.flyer-head:after{content:"";position:absolute;width:21cqw;height:21cqw;border:2.9cqw solid #ffffff18;border-radius:50%;right:-4.6cqw;top:-10.5cqw}
+.flyer-head h3{font-size:5.26cqw;line-height:1;margin:.9cqw 0 .6cqw;max-width:90%}
+.flyer-head p{margin:0;font-size:1.71cqw;opacity:.9}
+.store{font-weight:900;letter-spacing:.06em;font-size:1.97cqw}
+.week{position:absolute;right:4%;bottom:15%;background:var(--accent);color:var(--onaccent,#3a3150);padding:.8cqw 1.3cqw;border-radius:7px;font-size:1.45cqw;font-weight:900;transform:rotate(3deg)}
+
+/* Foto no cabeçalho é escurecida para o texto continuar legível; a arte do
+   tema não, porque já nasce com contraste. */
+.flyer-head.has-bg{background-image:linear-gradient(0deg,rgba(0,0,0,.48),rgba(0,0,0,.48)),var(--headbg);background-size:cover;background-position:center}
+.flyer-head.has-art{background-image:var(--headbg);background-size:cover;background-position:center}
+.flyer-head.has-bg:after,.flyer-head.has-art:after{display:none}
+
+/* Com logo, o cabeçalho reserva o espaço dele: nenhum texto passa por trás. */
+.flyer-logo{position:absolute;top:10%;right:4%;height:40%;max-width:26%;object-fit:contain;background:#fff;border-radius:1.4cqw;padding:.8cqw;z-index:2}
+.flyer-head.has-logo{padding-right:31%}
+.flyer-head.has-logo h3,.flyer-head.has-logo p{max-width:100%}
+
+.flyer-foot{flex:none;display:flex;justify-content:space-between;gap:10px;align-items:center;border-top:1px solid #e8e8f0;padding-top:2%;font-size:1.45cqw;color:#73738a}
+.flyer-foot strong{color:var(--brand)}
+
+.empty{grid-column:1/-1;border:1px dashed #c9c9dd;border-radius:10px;display:grid;place-items:center;color:#85859a;font-size:13px;padding:20px;text-align:center}

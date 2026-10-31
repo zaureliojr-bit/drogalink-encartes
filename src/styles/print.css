@@ -1,0 +1,15 @@
+/* Impressão / salvar em PDF: some o painel e sobram só as páginas do
+   encarte, uma por folha A4. */
+
+@media print{
+  .flyer,.flyer *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .preview-shell{display:block!important;padding:0;background:white;overflow:visible}
+  .flyer:not(:last-child){break-after:page}
+  body{background:white}
+  header,main>.panel,.right>.panel:first-child,.toolbar,.notice{display:none!important}
+  main{display:block;padding:0}
+  .right{display:block}
+  .flyer{width:100%;max-width:none;box-shadow:none;break-inside:avoid}
+  .flyer.a4{aspect-ratio:1/1.414}
+  @page{size:A4 portrait;margin:8mm}
+}

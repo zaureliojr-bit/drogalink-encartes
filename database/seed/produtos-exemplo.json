@@ -1,0 +1,202 @@
+[
+  {
+    "descricao": "DIPIRONA SODICA 500MG 10CPR",
+    "categoria": "Medicamentos",
+    "precoVenda": 12.9,
+    "precoPromocao": 7.99,
+    "codigo": "1001",
+    "ean": "7891058001018",
+    "imagem": "",
+    "laboratorio": "MEDLEY"
+  },
+  {
+    "descricao": "PARACETAMOL 750MG 20CPR",
+    "categoria": "Medicamentos",
+    "precoVenda": 19.5,
+    "precoPromocao": 12.9,
+    "codigo": "1002",
+    "ean": "7891058001025",
+    "imagem": "",
+    "laboratorio": "NEO QUIMICA"
+  },
+  {
+    "descricao": "IBUPROFENO 600MG 20CPR",
+    "categoria": "Medicamentos",
+    "precoVenda": 24.9,
+    "precoPromocao": 16.49,
+    "codigo": "1003",
+    "ean": "7891058001032",
+    "imagem": "",
+    "laboratorio": "EMS"
+  },
+  {
+    "descricao": "AMOXICILINA 500MG 21CAP",
+    "categoria": "Medicamentos",
+    "precoVenda": 38.9,
+    "precoPromocao": 27.9,
+    "codigo": "1004",
+    "ean": "7891058001049",
+    "imagem": "",
+    "laboratorio": "SANDOZ"
+  },
+  {
+    "descricao": "LOSARTANA POTASSICA 50MG 30CPR",
+    "categoria": "Medicamentos",
+    "precoVenda": 21.9,
+    "precoPromocao": 9.99,
+    "codigo": "1005",
+    "ean": "7891058001056",
+    "imagem": "",
+    "laboratorio": "NEO QUIMICA"
+  },
+  {
+    "descricao": "ATENOLOL 25MG 30CPR",
+    "categoria": "Medicamentos",
+    "precoVenda": 18.7,
+    "precoPromocao": 12.99,
+    "codigo": "1006",
+    "ean": "7891058001063",
+    "imagem": "",
+    "laboratorio": "MEDLEY"
+  },
+  {
+    "descricao": "OMEPRAZOL 20MG 28CAP",
+    "categoria": "Medicamentos",
+    "precoVenda": 26.4,
+    "precoPromocao": 15.9,
+    "codigo": "1007",
+    "ean": "7891058001070",
+    "imagem": "",
+    "laboratorio": "EUROFARMA"
+  },
+  {
+    "descricao": "METFORMINA 850MG 30CPR",
+    "categoria": "Medicamentos",
+    "precoVenda": 22.8,
+    "precoPromocao": 14.5,
+    "codigo": "1008",
+    "ean": "7891058001087",
+    "imagem": "",
+    "laboratorio": "MERCK"
+  },
+  {
+    "descricao": "SINVASTATINA 20MG 30CPR",
+    "categoria": "Medicamentos",
+    "precoVenda": 29.9,
+    "precoPromocao": 18.9,
+    "codigo": "1009",
+    "ean": "7891058001094",
+    "imagem": "",
+    "laboratorio": "EMS"
+  },
+  {
+    "descricao": "DORFLEX 36CPR",
+    "categoria": "Medicamentos",
+    "precoVenda": 34.9,
+    "precoPromocao": 24.9,
+    "codigo": "1010",
+    "ean": "7891058001100",
+    "imagem": "",
+    "laboratorio": "SANOFI"
+  },
+  {
+    "descricao": "VITAMINA C 1G 10CPR EFERVESCENTE",
+    "categoria": "Vitaminas",
+    "precoVenda": 26.9,
+    "precoPromocao": 17.9,
+    "codigo": "2001",
+    "ean": "7891058002015",
+    "imagem": "",
+    "laboratorio": "CIMED"
+  },
+  {
+    "descricao": "POLIVITAMINICO A-Z 60CPR",
+    "categoria": "Vitaminas",
+    "precoVenda": 59.9,
+    "precoPromocao": 0,
+    "codigo": "2002",
+    "ean": "7891058002022",
+    "imagem": "",
+    "laboratorio": "NATURAL LIFE"
+  },
+  {
+    "descricao": "PROTETOR SOLAR FPS 50 120ML",
+    "categoria": "Dermocosmeticos",
+    "precoVenda": 78.9,
+    "precoPromocao": 54.9,
+    "codigo": "3001",
+    "ean": "7891058003012",
+    "imagem": "",
+    "laboratorio": "NIVEA"
+  },
+  {
+    "descricao": "HIDRATANTE CORPORAL 400ML",
+    "categoria": "Dermocosmeticos",
+    "precoVenda": 44.9,
+    "precoPromocao": 29.9,
+    "codigo": "3002",
+    "ean": "7891058003029",
+    "imagem": "",
+    "laboratorio": "NIVEA"
+  },
+  {
+    "descricao": "SHAMPOO ANTICASPA 200ML",
+    "categoria": "Higiene",
+    "precoVenda": 32.9,
+    "precoPromocao": 21.9,
+    "codigo": "3003",
+    "ean": "7891058003036",
+    "imagem": "",
+    "laboratorio": "CLEAR"
+  },
+  {
+    "descricao": "CREME DENTAL 90G",
+    "categoria": "Higiene",
+    "precoVenda": 9.9,
+    "precoPromocao": 5.99,
+    "codigo": "4001",
+    "ean": "7891058004019",
+    "imagem": "",
+    "laboratorio": "COLGATE"
+  },
+  {
+    "descricao": "ESCOVA DENTAL MACIA",
+    "categoria": "Higiene",
+    "precoVenda": 14.9,
+    "precoPromocao": 8.99,
+    "codigo": "4002",
+    "ean": "7891058004026",
+    "imagem": "",
+    "laboratorio": "ORAL-B"
+  },
+  {
+    "descricao": "FRALDA INFANTIL M 42UN",
+    "categoria": "Infantil",
+    "precoVenda": 69.9,
+    "precoPromocao": 49.9,
+    "codigo": "5001",
+    "ean": "7891058005016",
+    "imagem": "",
+    "laboratorio": "BABYSEC"
+  },
+  {
+    "descricao": "LENCO UMEDECIDO 100UN",
+    "categoria": "Infantil",
+    "precoVenda": 24.9,
+    "precoPromocao": 0,
+    "codigo": "5002",
+    "ean": "7891058005023",
+    "imagem": "",
+    "laboratorio": "HUGGIES"
+  },
+  {
+    "descricao": "ALCOOL EM GEL 70% 500ML",
+    "categoria": "Higiene",
+    "precoVenda": 16.9,
+    "precoPromocao": 9.9,
+    "codigo": "6001",
+    "ean": "7891058006013",
+    "imagem": "",
+    "laboratorio": "START"
+  }
+]
