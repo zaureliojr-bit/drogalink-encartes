@@ -69,6 +69,8 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}.hint{font-size:12px;
   <div class="btnrow"><button class="btn soft" id="resetBrand">Cores padrão</button><button class="btn soft" id="removeLogo">Remover logo</button></div>
   <div class="field"><label for="theme">Tema sazonal</label><select id="theme"><option value="">Padrão Drogalink</option><option value="verao">Verão</option><option value="outono">Outono</option><option value="inverno">Inverno</option><option value="primavera">Primavera</option><option value="natal">Natal</option><option value="anonovo">Ano Novo</option><option value="pascoa">Páscoa</option><option value="maes">Dia das Mães</option><option value="pais">Dia dos Pais</option><option value="juninas">Festas Juninas</option><option value="aulas">Volta às aulas</option><option value="rosa">Outubro Rosa</option><option value="azul">Novembro Azul</option><option value="black">Black Friday</option></select></div>
   <p class="hint">O tema troca as duas cores do encarte. Depois de aplicar, você ainda pode ajustar cada cor à mão nos campos acima.</p>
+  <div class="two"><div class="field"><label for="themeFile">Importar tema personalizado (.json)</label><input id="themeFile" type="file" accept="application/json,.json"></div><div class="field"><label>&nbsp;</label><button class="btn soft full" id="themeTemplate" type="button">↓ Baixar modelo de tema</button></div></div>
+  <p class="hint">Baixe o modelo, troque nome, cores e o motivo decorativo (coração, estrela, neve, sol, folha, bandeira, ovo ou flor - são os únicos disponíveis) e importe de volta. O tema importado entra na lista acima, junto dos prontos, e fica salvo pra próxima vez que abrir o encartes.</p>
   <div class="two"><div class="field"><label for="headBg">Imagem do cabeçalho</label><input id="headBg" type="file" accept="image/*"><button class="btn soft rm" id="removeHeadBg" hidden>✕ Remover imagem do cabeçalho</button></div><div class="field"><label for="pageBg">Imagem de fundo da página</label><input id="pageBg" type="file" accept="image/*"><button class="btn soft rm" id="removePageBg" hidden>✕ Remover imagem de fundo</button></div></div>
   <div class="field"><label for="bgOpacity">Intensidade do fundo da página: <strong id="bgOpacityVal">12</strong>%</label><input id="bgOpacity" type="range" min="0" max="60" step="2" value="12"></div>
   <p class="hint">A imagem do cabeçalho entra atrás do título, escurecida para o texto continuar legível. A de fundo ocupa a página inteira como marca d'água — acima de 25% ela começa a disputar com os preços.</p>
@@ -176,6 +178,37 @@ else{const S=300,el=[];for(let i=0;i<4;i++){const x=Math.round(r()*S),y=Math.rou
 svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${S}" height="${S}">${el.join('')}</svg>`}
 return artCache[ck]='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)}
 $('theme').onchange=e=>{const t=THEMES[e.target.value]||['#5c5c94','#ffcf45'];$('cbrand').value=t[0];$('caccent').value=t[1];renderFlyer()};
+
+// Tema personalizado (.json): mesma ideia dos 14 sazonais fixos em
+// THEMES/ART, só que vindo de fora. O motivo decorativo continua preso
+// aos 8 que já existem em MOTIFS - desenhar um motivo novo exigiria
+// SVG de verdade no arquivo, e isso é editor, não importação.
+const TEMAS_PADRAO=new Set(Object.keys(THEMES)),TEMAS_KEY='drogalink_temas_v1';
+let temasCustom={};
+function validarTema(obj){
+ const hex=/^#[0-9a-fA-F]{6}$/,erros=[];
+ if(!obj||typeof obj!=='object')return{erros:['Arquivo não é um JSON de tema válido.']};
+ let id=String(obj.id||obj.nome||'').trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+ if(!id){erros.push('Informe "id" ou "nome".');return{erros}}
+ if(TEMAS_PADRAO.has(id))id+='-personalizado';
+ const nome=String(obj.nome||obj.id||'Tema personalizado').trim();
+ const brand=hex.test(obj.brand)?obj.brand:null;if(!brand)erros.push('"brand" precisa ser uma cor hexadecimal, ex.: "#5c5c94".');
+ const accent=hex.test(obj.accent)?obj.accent:null;if(!accent)erros.push('"accent" precisa ser uma cor hexadecimal, ex.: "#ffcf45".');
+ if(erros.length)return{erros};
+ const grad=Array.isArray(obj.gradiente)?obj.gradiente:[],g0=hex.test(grad[0])?grad[0]:brand,g1=hex.test(grad[1])?grad[1]:brand;
+ const motivo=MOTIFS[obj.motivo]?obj.motivo:'star';
+ const corPreco=hex.test(obj.corPreco)?obj.corPreco:'#e74650';
+ return{tema:{id,nome,brand,accent,gradiente:[g0,g1],motivo,corPreco}};
+}
+function registrarTemaCustom(t,selecionar){
+ THEMES[t.id]=[t.brand,t.accent];ART[t.id]={g:t.gradiente,m:t.motivo,p:t.corPreco};
+ if(![...$('theme').options].some(o=>o.value===t.id)){const opt=document.createElement('option');opt.value=t.id;opt.textContent=t.nome+' (personalizado)';$('theme').appendChild(opt)}
+ if(selecionar){$('theme').value=t.id;$('cbrand').value=t.brand;$('caccent').value=t.accent;renderFlyer()}
+}
+function salvarTemasCustom(){try{localStorage.setItem(TEMAS_KEY,JSON.stringify(temasCustom))}catch(e){}}
+function carregarTemasCustom(){try{const d=JSON.parse(localStorage.getItem(TEMAS_KEY)||'null');if(d&&typeof d==='object'){temasCustom=d;Object.values(d).forEach(t=>registrarTemaCustom(t,false))}}catch(e){}}
+$('themeFile').onchange=async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;try{const obj=JSON.parse(await file.text());const{tema,erros}=validarTema(obj);if(erros){alert('Não consegui importar esse tema:\n- '+erros.join('\n- '));return}registrarTemaCustom(tema,true);temasCustom[tema.id]=tema;salvarTemasCustom();alert('Tema "'+tema.nome+'" importado e aplicado.')}catch(err){alert('Não consegui ler esse arquivo. Confira se é um .json válido.')}};
+$('themeTemplate').onclick=()=>{const modelo={id:'meu-tema',nome:'Meu tema',brand:$('cbrand').value,accent:$('caccent').value,gradiente:[$('cbrand').value,$('cbrand').value],motivo:'star',corPreco:'#e74650',_motivos_disponiveis:Object.keys(MOTIFS)};download(new Blob([JSON.stringify(modelo,null,2)],{type:'application/json'}),'drogalink-tema-modelo.json')};
 $('headBg').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{headBgData=await fileToDataURL(f,1100);renderFlyer()}catch{alert('Não foi possível ler a imagem do cabeçalho.')}e.target.value=''};
 $('pageBg').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{pageBgData=await fileToDataURL(f,1000);renderFlyer()}catch{alert('Não foi possível ler a imagem de fundo.')}e.target.value=''};
 $('removeHeadBg').onclick=()=>{headBgData='';renderFlyer()};
@@ -244,7 +277,7 @@ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"><f
 const img=await loadImage('data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg));const k=outW/W,c=document.createElement('canvas');c.width=outW;c.height=Math.round(H*k);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);
 c.toBlob(b=>download(b,'drogalink-encarte-'+fmt+(els.length>1?'-p'+(pi+1):'')+'.png'),'image/png');await new Promise(r=>setTimeout(r,350))}if(skipped)alert(skipped+' imagem(ns) de URL externa não puderam entrar no PNG. Envie a foto como arquivo para resolver.')}catch(e){alert('Não foi possível gerar o PNG neste navegador. Use "Imprimir / salvar PDF" como alternativa.')}btn.disabled=false};
 function loadImage(src){return new Promise((res,rej)=>{const img=new Image();img.crossOrigin='anonymous';img.onload=()=>res(img);img.onerror=rej;img.src=src})}
-load();renderCatalog();renderFlyer();
+carregarTemasCustom();load();renderCatalog();renderFlyer();
 </script>
 </body>
 </html>
