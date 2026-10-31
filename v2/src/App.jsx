@@ -6,7 +6,7 @@ const starterProducts = [
   { id: 1, name: 'Vitamina C 1g', category: 'Vitaminas', oldPrice: '19,90', price: '14,99', unit: 'un' },
   { id: 2, name: 'Protetor solar FPS 50', category: 'Dermocosméticos', oldPrice: '59,90', price: '44,90', unit: 'un' },
   { id: 3, name: 'Fralda infantil pacote', category: 'Infantil', oldPrice: '49,90', price: '39,99', unit: 'pct' },
-  { id: 4, name: 'Shampoo  למ', category: 'Higiene', oldPrice: '22,90', price: '17,90', unit: 'un' }
+  { id: 4, name: 'Shampoo hidratante', category: 'Higiene', oldPrice: '22,90', price: '17,90', unit: 'un' }
 ];
 
 const money = (value) => {
